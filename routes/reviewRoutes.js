@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createReview,
   getAllReviews,
+  getReviewById, // Add this import for the new controller function
   updateReview,
   deleteReview,
 } = require("../controllers/reviewController");
@@ -52,6 +53,9 @@ router.put(
 
 // ✅ Get all reviews (Public) with Pagination & Sorting
 router.get("/", getAllReviews);
+
+// ✅ Get a specific review by ID (Public)
+router.get("/:id", getReviewById); // Add this line to get review by ID
 
 // ✅ Delete a review (Protected)
 router.delete("/:id", protect, deleteReview);

@@ -5,7 +5,6 @@ const cloudinary = require("../utils/cloudinary");
 
 // @desc    Create a review
 const createReview = async (req, res) => {
-  // Validate input
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -59,9 +58,27 @@ const getAllReviews = async (req, res) => {
   }
 };
 
+// @desc    Get a single review by ID
+const getReviewById = async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.id).populate(
+      "user",
+      "username"
+    );
+
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    res.status(200).json(review);
+  } catch (err) {
+    console.error("Error fetching review by ID:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // @desc    Update a review
 const updateReview = async (req, res) => {
-  // Validate input
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -78,7 +95,6 @@ const updateReview = async (req, res) => {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
-    // Update review fields
     review.animeTitle = req.body.animeTitle || review.animeTitle;
     review.reviewText = req.body.reviewText || review.reviewText;
     review.rating = req.body.rating || review.rating;
@@ -130,10 +146,10 @@ const deleteReview = async (req, res) => {
   }
 };
 
-// ✅ Export all controllers now!
 module.exports = {
   createReview,
   getAllReviews,
+  getReviewById, // Make sure this is exported
   updateReview,
   deleteReview,
 };
