@@ -17,11 +17,15 @@ const reviewSchema = new mongoose.Schema(
       min: 1,
       max: 10,
     },
+    animeImage: {
+      type: String, // Store the anime poster image URL
+      required: true, // This field is required
+    },
     imageUrl: {
-      type: String,
+      type: String, // Field for the user-uploaded image (optional)
     },
     imagePublicId: {
-      type: String,
+      type: String, // For Cloudinary image public ID
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
