@@ -21,7 +21,8 @@ app.use(cors());
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/reviews", reviewRoutes);
-app.use("/api/comments", commentRoutes); // ✅ Fixed this line
+app.use("/api/reviews", commentRoutes);  // 🔥 Fix nested routes
+
 
 // Connect to MongoDB Atlas
 mongoose
